@@ -2,7 +2,7 @@
 <extension key="com.joineryhq.referralsource" type="module">
   <file>referralsource</file>
   <name>Referral Source</name>
-  <description>Custom behaviors for Contributions</description>
+  <description>Add source from URL param for Contributions and Event Participants</description>
   <license>GPL-3.0</license>
   <maintainer>
     <author>Allen Shaw</author>
@@ -20,7 +20,7 @@
   <compatibility>
     <ver>5.45</ver>
   </compatibility>
-  <comments>Allows modifying the contribution Source field based on the 'source' query string parameter, if such is provided in the URL for a contribution page. Concept and initial sponored by Korlon.</comments>
+  <comments>Allows modifying the contribution or participant Source field based on the 'source' query string parameter, if such is provided in the URL for a contribution or event registration page. Concept and initial sponored by Korlon.</comments>
   <classloader>
     <psr4 prefix="Civi\" path="Civi"/>
   </classloader>

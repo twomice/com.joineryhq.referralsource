@@ -36,7 +36,7 @@ function referralsource_civicrm_postProcess($formName, &$form) {
         // Add the source param value to the current source, if we haven't already
         // done so for this form (when running with a payment processor, this hook
         // is fired twice, so we have to keep track of this ourselves.)
-        if(!isset($form->_params['_com.joineryhq.referralsource_processed'])) {
+        if (!isset($form->_params['_com.joineryhq.referralsource_processed'])) {
           $newSource = $lastContribution['values'][0]['contribution_source'] . ' - ' . $value;
           $form->_params['_com.joineryhq.referralsource_processed'] = TRUE;
         }
@@ -46,6 +46,49 @@ function referralsource_civicrm_postProcess($formName, &$form) {
           'id' => $form->_contributionID,
           'source' => $newSource,
         ]);
+
+        break;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_civicrm_buildForm().
+ * There are too many different paths to get to the thank you page for event registrations, so better to just add source on thankyou
+ */
+function referralsource_civicrm_buildForm($formName, &$form) {
+  if ($formName === 'CRM_Event_Form_Registration_ThankYou') {
+    $controller = $form->getVar('controller');
+    $params = explode('?', $controller->_entryURL);
+    parse_str(end($params), $parseURL);
+
+    foreach ($parseURL as $key => $value) {
+      $newKey = str_replace('amp;', '', $key);
+
+      if ($newKey === 'source') {
+        // if payment, then we get _participantIDS but if no payment, we only get primary _participantId (even if additionals exist)
+        $participantIds = $form->getVar('_participantIDS');
+        // so get additional participants if not given
+        if (!($participantIds)) {
+          $primaryParticipantId = $form->getVar('_participantId');
+          // The API filters out test participants and won't return them unless you specify IS NOT NULL
+          $additionaParticipants = \Civi\Api4\Participant::get(FALSE)
+            ->addWhere('registered_by_id', '=', $primaryParticipantId)
+            ->addWhere('is_test', 'IS NOT NULL')
+            ->execute()->column('id');
+          $participantIds = array_merge([$form->getVar('_participantId')], $additionaParticipants);
+        }
+
+        $primaryParticipant = \Civi\Api4\Participant::get(FALSE)
+          ->addSelect('source')
+          ->addWhere('id', '=', $participantIds[0])
+          ->execute()->first();
+
+        \Civi\Api4\Participant::update(FALSE)
+          ->addValue('source', $primaryParticipant['source'] . ' - ' . $value)
+          ->addWhere('id', 'IN', $participantIds)
+          ->execute();
 
         break;
       }
