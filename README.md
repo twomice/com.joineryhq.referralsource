@@ -20,6 +20,6 @@ Developed by [Joinery](https://joineryhq.com). Concept and initial sponsorship b
 
 ## Support
 
-Support for this extension is handled under Joinery's ["Limited Support" policy](https://joineryhq.com/software-support-levels#limited-support).
+Support for this package is handled under Joinery's ["Limited Support" policy](https://joineryhq.com/software-support-levels#limited-support).
 
-Public issue queue for this extension: [https://github.com/twomice/com.joineryhq.referralsource/issues](https://github.com/twomice/com.joineryhq.referralsource/issues)
+Public issue queue for this package: [https://github.com/twomice/com.joineryhq.referralsource/issues](https://github.com/twomice/com.joineryhq.referralsource/issues)
