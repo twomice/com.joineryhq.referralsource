@@ -2,7 +2,7 @@
 
 CiviCRM extension providing custom behaviors for Contributions:
 
-*  Allows modifying the contribution Source field based on the 'source' query string parameter, if such is provided in the URL for a contribution page.
+*  Allows modifying the contribution and participant Source fields based on the 'source' query string parameter, if such is provided in the URL for a contribution page or event registration page.
 
 The extension is licensed under [GPL-3.0](LICENSE.txt).
 
@@ -13,7 +13,7 @@ The extension is licensed under [GPL-3.0](LICENSE.txt).
 
 ## Usage
 
-For any contribution page, append `&source=X` to the URL. This will cause 'X' to be appended to the resulting contribution Source field value.
+For any contribution page or event registration page, append `&source=X` to the URL. This will cause 'X' to be appended to the resulting contribution or participant(s) Source field value.
 
 ## Credits
 Developed by [Joinery](https://joineryhq.com). Concept and initial sponsorship by [Korlon](https://korlon.com).
